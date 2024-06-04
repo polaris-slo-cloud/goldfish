@@ -1,0 +1,17 @@
+syntax = "proto3";
+package event_subscriber_service;
+import "event_bus_service.proto";
+service EventSubscriberService {
+  rpc Notify (Message) returns (Status);
+}
+
+message Message {
+  string id = 1;
+  event_bus_service.Context context = 2;
+  optional string url = 3;
+}
+
+
+message Status {
+  int32 status = 1;
+}

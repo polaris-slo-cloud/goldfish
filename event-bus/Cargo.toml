@@ -1,0 +1,30 @@
+[package]
+name = "event-bus"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "event-bus"
+path = "src/main.rs"
+
+[dependencies]
+tonic = "0.10.2"
+prost = "0.12.1"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+futures = "0.3.28"
+uuid = { version = "1.4.1", features = [
+    "v4",
+    "fast-rng",
+    "macro-diagnostics",
+] }
+rand = "0.8.5"
+serde_json = "1.0.107"
+crossbeam-channel = "0.5.12"
+
+[build-dependencies]
+tonic-build = "0.10.2"
+prost-build = "0.12.1"
+
+[profile.release]
+lto = true
+codegen-units = 1

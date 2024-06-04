@@ -1,0 +1,22 @@
+syntax = "proto3";
+package actor_service;
+import "event_bus_service.proto";
+service ActorService {
+  rpc run (RunRequest) returns (RunResponse);
+  rpc new_execution (RunRequest) returns (RunResponse);
+  rpc get_status (GetStatus) returns (RunResponse);
+}
+
+message RunRequest {
+  event_bus_service.Context context = 1;
+  bytes file = 2;
+  string function_id = 3;
+}
+
+message GetStatus {
+
+}
+
+message RunResponse {
+  uint32 response = 1;
+}

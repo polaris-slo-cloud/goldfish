@@ -1,0 +1,64 @@
+syntax = "proto3";
+package event_reception_service;
+import "event_bus_service.proto";
+service EventReception {
+  rpc Publish (Event) returns (Status);
+  rpc PublishHttp (Event) returns (Status);
+  rpc Subscribe (Subscriber) returns (Status);
+  rpc RegisterWarmActor (RegisterRequest) returns (Status);
+  rpc UnregisterWarmActor (UnregisterRequest) returns (Status);
+  rpc GetWarmActor (GetWarmActorRequest) returns (Status);
+  rpc CheckContainsSubscriber (SubscriberExits) returns (TopicSubCount);
+  rpc CallFunctionInternally (InternalRequest) returns (InternalResponse);
+}
+
+message Event {
+  string topic = 1;
+  event_bus_service.Context context = 2;
+  string resource_id = 3;
+}
+
+
+message InternalRequest{
+  string id = 1;
+  bytes context = 2;
+  string resource_id = 3;
+  string source_id = 4;
+}
+
+message InternalResponse{
+  string id = 1;
+  bytes context = 2;
+  string resource_id = 3;
+  string source_id = 4;
+}
+
+message Subscriber {
+  string topic = 1;
+  string url = 2;
+  string id = 3;
+}
+
+message SubscriberExits {
+  string topic = 1;
+}
+
+message Status {
+  int32 status = 1;
+}
+
+message RegisterRequest {
+  string function_id = 1;
+  string url = 2;
+}
+message UnregisterRequest {
+  string function_id = 1;
+  string url = 2;
+}
+message GetWarmActorRequest {
+  string function_id = 1;
+}
+
+message TopicSubCount {
+  uint64 count = 1;
+}

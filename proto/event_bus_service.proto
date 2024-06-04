@@ -1,0 +1,58 @@
+syntax = "proto3";
+package event_bus_service;
+
+service EventBusService {
+  rpc Publish (Event) returns (Status);
+  rpc Subscribe (Subscriber) returns (Status);
+  rpc RegisterWarmActor (RegisterRequest) returns (Status);
+  rpc UnregisterWarmActor (UnregisterRequest) returns (Status);
+  rpc GetWarmActor (GetWarmActorRequest) returns (Status);
+  rpc GetNumberOfSubsForTopic (SubscriberCount) returns (TopicSubCount);
+}
+
+message Event {
+  string topic = 1;
+  Context context = 2;
+  string resource_id = 3;
+}
+
+message Context{
+  optional string bus_url = 1;
+  optional bytes input = 2;
+  optional string request_id = 3;
+  optional bool internal = 4;
+  optional string step = 5;
+  optional string workflow_id = 6;
+  optional bytes output = 7;
+  optional string id = 8;
+}
+
+message Subscriber {
+  string topic = 1;
+  string url = 2;
+  string id = 3;
+}
+
+message SubscriberCount {
+  string topic = 1;
+}
+
+message Status {
+  int32 status = 1;
+}
+
+message RegisterRequest {
+  string function_id = 1;
+  string url = 2;
+}
+message GetWarmActorRequest {
+  string function_id = 1;
+}
+
+message UnregisterRequest {
+  string function_id = 1;
+  string url = 2;
+}
+message TopicSubCount {
+  uint64 count = 1;
+}

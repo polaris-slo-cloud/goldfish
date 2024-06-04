@@ -1,0 +1,15 @@
+syntax = "proto3";
+package wasm_actor;
+
+service WasmActor {
+  rpc run (RunRequest) returns (RunResponse);
+}
+
+message RunRequest {
+  string input = 1;
+  bytes file = 2;
+}
+
+message RunResponse {
+  string response = 1;
+}
